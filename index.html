@@ -2,15 +2,62 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Lucid</title>
+    <link rel="stylesheet" type="text/css" href="src/css/system.css">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet">
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+    <h1>Lucid</h1>
+    <!-- TITLESCREEN -->
+    <div id="titlescreen">
+      <h1 id="title">Lucid</h1>
+      <div id="startMenu">
+        <button class="startMenuBtn" onclick="startGame()">Start</button>
+        <button class="startMenuBtn">Load</button>
+        <button class="startMenuBtn">Exit</button>
+    </div>
+    </div>
+    <!-- PAUSE MENU -->
+    <div id="pauseOverlay">
+      <div id="pauseMenu">
+        <span>Menu</span>
+        <button class="pMenuBtn">Save</button>
+        <button class="pMenuBtn">Load</button>
+        <button class="pMenuBtn" onclick="gotoTitle()">Titlescreen</button>
+        <button class="pMenuBtn">Settings</button>
+        <button class="pMenuBtn" onclick="off()">Resume</button>
+      </div>
+    </div>
+
+    <!-- SAVE/LOAD MENU -->
+    <div id="saveLoadMenu"></div>
+
+    <!-- STORY LOG -->
+    <div id="logOverlay"></div>
+
+    <!-- CHARACTER/BACKGROUND SPRITE/IMG -->
+    <img id="sprite" src="" alt="sprite">
+    <img id="background" src="" alt="background">
+
+    <!-- FOOTER -->
+    <div id="footer">
+      <div id="msgBox"></div>
+      <!-- <div id="inputBox">> </div>
+      <input type="text" id="userInput" maxlength="50"> -->
+      <button class="menuBtn" onclick="on()">Menu</button>
+      <button class="menuBtn">Log</button>
+    </div>
+
+    <!-- CHOICE BOX -->
+    <div id="choice">
+      <h3 id="choiceQ"></h3><br>
+    </div>
 
     <!-- You can also require other files to run in this process -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="./jquery-3.4.1.min.js"></script> 
+    <script src="./script.js"></script>   
     <script src="./renderer.js"></script>
+    <script>if (window.module) module = window.module;</script>
   </body>
 </html>
