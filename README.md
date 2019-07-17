@@ -1,7 +1,7 @@
 # Ludid - A JS Horror Visual Novel
 by Xuyumi
 
-What's that about a haunted train again?
+*"What do you mean the train is haunted???"*
 
 ### electron-quick-start
 
