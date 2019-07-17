@@ -1,4 +1,4 @@
-# Ludid - A JS Horror Visual Novel
+# Lucid - A JS Horror Visual Novel
 by Xuyumi
 
 *"What do you mean the train is haunted???"*
