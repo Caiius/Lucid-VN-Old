@@ -1,4 +1,9 @@
-# electron-quick-start
+# Ludid - A JS Horror Visual Novel
+by Xuyumi
+
+What's that about a haunted train again?
+
+### electron-quick-start
 
 **Clone and run for a quick way to see Electron in action.**
 
