@@ -15,7 +15,9 @@ let curr_line = 0;
 
 window.onload = function() {
     // titlescreen on start
-    
+    $("#titlescreen button").each(function(i) {
+        $(this).delay(700 * i).fadeIn(1000);
+    });
     // play titlescreen music
     playBgm("danse-morialta-by-kevin-macleod.mp3");
 
@@ -84,9 +86,10 @@ function startGame() {
     }); 
 }
 
-// goes to obj with correct label
+// goes to obj INDEX with correct label
 function find_label(labelStr) {
-
+    let index = story.findIndex(x => x.label === labelStr);
+    return index;
 }
 
 // -------- STORY PARSING/PATHING FUNCTIONS --------
@@ -141,15 +144,30 @@ function getNext() {
         }
   
       } else if (undefined !== curr_step.choice) { // if choice prompt available...
-  
+        console.log("Rendering choices");
         // display the question: current_step.choice
+        typeWriter(curr_step.choice, DEFAULT_SPEED);
+        let possibleAns = curr_step.ans; // array of answers and labels
         // display the answers: current_step.ans
-        // choose an answer
-        // and change curr_line accordingly
+        for(let i = 0; i < possibleAns.length; i++) {
+            let choiceBtn = document.createElement("button");
+            choiceBtn.className = "choiceBtn";
+            choiceBtn.innerHTML = possibleAns[i].msg;
+            choiceBtn.id = i;
+            $("#choice").append(choiceBtn);
+            document.getElementById(i).addEventListener("click", function() {
+                curr_line = find_label(possibleAns[i].next); 
+                fadeout("#choice", 1000, function() {
+                    $("#choice").empty(); // clear choices after selection
+                }) 
+            });
+        }
+
   
       }
     }
   }
+
 
 // -------- PAUSE MENU FUNCTIONS --------
 // Pause menu button display functions
@@ -158,11 +176,13 @@ function on() {
 }
 
 function off() {
-    fadeout("#pauseOverlay", 1000);
+    fadeout("#pauseOverlay", 2000);
 }
 
 function gotoTitle() {
     off();
+    // switch to titlescreen music
+    playBgm("danse-morialta-by-kevin-macleod.mp3");
     fadein("#titlescreen", 3000);
 }
 
