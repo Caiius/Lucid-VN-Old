@@ -149,7 +149,15 @@ function getNext() {
         typeWriter(curr_step.choice, DEFAULT_SPEED);
         let possibleAns = curr_step.ans; // array of answers and labels
         // display the answers: current_step.ans
-        for(let i = 0; i < possibleAns.length; i++) {
+        renderChoices(possibleAns);
+
+  
+      }
+    }
+  }
+
+  function renderChoices(possibleAns) {
+for(let i = 0; i < possibleAns.length; i++) {
             let choiceBtn = document.createElement("button");
             choiceBtn.className = "choiceBtn";
             choiceBtn.innerHTML = possibleAns[i].msg;
@@ -157,15 +165,12 @@ function getNext() {
             $("#choice").append(choiceBtn);
             document.getElementById(i).addEventListener("click", function() {
                 curr_line = find_label(possibleAns[i].next); 
-                fadeout("#choice", 1000, function() {
+                getNext(); // go on to choice results
+                fadeout("#choice", 500, function() {
                     $("#choice").empty(); // clear choices after selection
                 }) 
             });
         }
-
-  
-      }
-    }
   }
 
 
@@ -287,4 +292,23 @@ function playSe(se) {
     }
     
 }
+
+
+// -------- SAVE/LOAD FUNCTIONS --------
+// see https://stackoverflow.com/questions/34847231/how-to-save-progress-in-an-html-game
+function save(num) {
+    let currSave = {
+        save_slot: num,
+        currLine: curr_line,
+        currSprite: document.getElementById("sprite").src,
+        currBackground: document.getElementById("background").src
+    }
+    localStorage.setItem('', JSON.stringify(currSave));
+
+  }
+  
+  function load() {
+    // player = JSON.parse(localStorage.getItem('player'));
+    // score = JSON.parse(localStorage.getItem('score'));
+  }
 
