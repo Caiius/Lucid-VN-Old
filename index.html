@@ -5,6 +5,8 @@
     <title>Lucid</title>
     <link rel="stylesheet" type="text/css" href="src/css/system.css">
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/vex-js/sass/vex.sass" />
+    <link rel="stylesheet" href="node_modules/vex-js/sass/vex-theme-os.sass" />
   </head>
   <body>
     <!-- TITLESCREEN -->
@@ -20,7 +22,7 @@
     <div id="pauseOverlay">
       <div id="pauseMenu">
         <span>Menu</span>
-        <button class="pMenuBtn">Save</button>
+        <button class="pMenuBtn" onclick="renderSaveFiles()">Save</button>
         <button class="pMenuBtn">Load</button>
         <button class="pMenuBtn" onclick="gotoTitle()">Titlescreen</button>
         <button class="pMenuBtn">Settings</button>
@@ -29,7 +31,15 @@
     </div>
 
     <!-- SAVE/LOAD MENU -->
-    <div id="saveLoadMenu"></div>
+    <div id="saveLoadMenuContainer">
+      <div class= "centerContainer">
+        <div class="saveLoadHeader">Save Game</div><br>
+        <ul id="saveLoadMenu">
+          
+        </ul><br>
+        <button id="backBtn">Back</button>
+      </div>
+    </div>
 
     <!-- STORY LOG -->
     <div id="logOverlay"></div>
