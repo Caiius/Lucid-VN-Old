@@ -4,13 +4,17 @@
 
 var Typed = require('typed.js');
 var howler = require('howler');
+var vex = require('vex-js')
+vex.registerPlugin(require('vex-dialog'))
+vex.defaultOptions.className = 'vex-theme-os'
 
 let bgm_link = "./src/music/bgm/";
 let se_link = "./src/music/se/"
 let curr_bgm;
 let se;
 let isTyping = false;
-let mode = "none";
+let timestamp; // stores total timestamp value
+let startTime; // records start time of current session
 let curr_line = 0;
 
 window.onload = function() {
@@ -177,10 +181,13 @@ for(let i = 0; i < possibleAns.length; i++) {
 // -------- PAUSE MENU FUNCTIONS --------
 // Pause menu button display functions
 function on() {
+    setTimestamp();
     fadein("#pauseOverlay", 1000);
 }
 
 function off() {
+    // start timer again
+    currTimer = new Date();
     fadeout("#pauseOverlay", 2000);
 }
 
@@ -296,19 +303,140 @@ function playSe(se) {
 
 // -------- SAVE/LOAD FUNCTIONS --------
 // see https://stackoverflow.com/questions/34847231/how-to-save-progress-in-an-html-game
-function save(num) {
+
+function secondsToHMS(secs) {
+    // ref: https://stackoverflow.com/questions/26580509/calculate-time-difference-between-two-date-in-hhmmss-javascript
+    function z(n){return (n<10?'0':'') + n;}
+    var sign = secs < 0? '-':'';
+    secs = Math.abs(secs);
+    return sign + z(secs/3600 |0) + ':' + z((secs%3600) / 60 |0) + ':' + z(secs%60);
+  }
+
+// returns current total timestamp for current save file
+function setTimestamp() {
+    let endTime = new Date();
+    var diffSeconds = endTime - startTime;
+    let sessionTime = secondsToHMS(diffSeconds);
+    timestamp += sessionTime;
+}
+
+// saves all current values and booleans to an array
+function fillSwitches() {
+
+}
+
+function save(slotNum) {
+    let timestmp = setTimestamp();
     let currSave = {
-        save_slot: num,
+        save_slot: slotNum,
         currLine: curr_line,
         currSprite: document.getElementById("sprite").src,
-        currBackground: document.getElementById("background").src
+        currBackground: document.getElementById("background").src,
+        currBgm: curr_bgm,
+        timestamp: "",
+        screenshot: "",
+        switches: []
     }
-    localStorage.setItem('', JSON.stringify(currSave));
+    localStorage.setItem(slotNum, JSON.stringify(currSave));
 
   }
-  
-  function load() {
-    // player = JSON.parse(localStorage.getItem('player'));
-    // score = JSON.parse(localStorage.getItem('score'));
+
+  function getSlots() {
+    let slots = [
+        localStorage.getItem("1"),
+        localStorage.getItem("2"),
+        localStorage.getItem("3"),
+        localStorage.getItem("4"),
+        localStorage.getItem("5")
+    ];
+    return slots;
   }
+  
+  // grabs all save files from localstorage and displays them in a list for saving or loading
+  // saveOrLoad == true if save, false if load
+function renderSaveFiles(saveOrLoad) {
+    $("#saveLoadMenu").empty();
+    // populate (5) save file slots
+    let slots = getSlots();
+
+    for(let i = 0; i < slots.length; i++) {
+        let saveSlot = document.createElement('li');
+        saveSlot.id = "save_" + i;
+        saveSlot.innerHTML = i;
+        if(slots[i] != null) { 
+            // save slot is occupied
+            let currSlot = JSON.parse(slots[i]);
+
+            // TODO: Append previous save data (timestamp, screenshot, etc)
+
+            $("#" + saveSlot.id).click(function() {
+                // -------------- SAVING --------------
+                if(saveOrLoad) {
+                    // ask user for permission to override
+                    console.log("Prompt User: Save override?");
+                    vex.dialog.confirm({
+                        message: 'Overwrite previous save data?',
+                        callback: function (value) {
+                            if (value) {
+                                save(i);
+                                // TODO: update li appearance with new save data
+                                
+                                // TODO: Play sound effect
+                                vex.dialog.alert('Successfully saved.');
+                            } 
+                        }
+                    });
+                } else {
+                    // -------------- LOADING --------------
+                    console.log("Loading save slot " + i);
+                    load(currSlot);
+
+                }
+                
+            });
+        } else {
+            $("#" + saveSlot.id).click(function() {
+                // render free slot
+                if (saveOrLoad) {
+                    // Just save straight into the free spot
+                    save(i);
+                    // TODO: update li appearance with new save data
+                    
+                    // TODO: Play sound effect
+                    vex.dialog.alert('Successfully saved.');
+                } else {
+                    // Play error sound effect --> Cannot load no data slot
+                    console.log("Cannot Load: No Data");
+                }
+            });
+
+        }
+        $("#saveLoadMenu").append(saveSlot);
+        
+    }
+    // open save page
+    fadein("#saveLoadMenuContainer", 500);
+}
+
+
+  // loads a specific game
+function load(saveFile) {
+    curr_line = saveFile.currLine;
+    document.getElementById("sprite").src = saveFile.currSprite;
+    document.getElementById("background").src = saveFile.currBackground;
+    timestamp = saveFile.timestamp;
+
+    // start timer
+    currTimer = new Date();
+
+     // hide save/load screen
+    fadeout("#saveLoadMenuContainer", 500, function() {
+        fadeout("#titlescreen", 1000, function() {
+            playBgm(saveFile.currBgm);
+            getNext();
+        });
+    });
+   
+  
+}
 
