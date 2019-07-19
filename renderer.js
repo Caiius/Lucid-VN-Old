@@ -2,18 +2,17 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
+
 var Typed = require('typed.js');
 var howler = require('howler');
-var vex = require('vex-js')
-vex.registerPlugin(require('vex-dialog'))
-vex.defaultOptions.className = 'vex-theme-os'
+const { dialog } = require('electron').remote;
 
 let bgm_link = "./src/music/bgm/";
-let se_link = "./src/music/se/"
+let se_link = "./src/music/se/";
 let curr_bgm;
-let se;
+let curr_bgm_src = '';
 let isTyping = false;
-let timestamp; // stores total timestamp value
+let timestamp ; // stores total timestamp value
 let startTime; // records start time of current session
 let curr_line = 0;
 
@@ -22,8 +21,10 @@ window.onload = function() {
     $("#titlescreen button").each(function(i) {
         $(this).delay(700 * i).fadeIn(1000);
     });
+
     // play titlescreen music
-    playBgm("danse-morialta-by-kevin-macleod.mp3");
+    playBgm("ghosts_walk_here.mp3");
+    document.getElementById("startLoadBtn").addEventListener("click",  function() {renderSaveFiles(false)}, false);
 
     // document.getElementById("userInput").addEventListener("keyup", function(event) {
     //     if (mode === "input") { // if not in cutscene/choice
@@ -42,11 +43,11 @@ window.onload = function() {
 }
 
 // retrieves story response to user input
-function getResponse(str) {
-    str.toLowerCase();
+// function getResponse(str) {
+//     str.toLowerCase();
 
     
-}
+// }
 
 // performs a typewriter effect given an string
 function typeWriter(str, spd) {
@@ -66,7 +67,29 @@ function typeWriter(str, spd) {
     
 }
 
-// -------- START MENU FUNCTIONS -------- 
+// -------- START MENU FUNCTIONS --------
+
+function setNextTrigger(){
+    document.body.onkeyup = function(e){
+        if(!isTyping) {
+             // wait for space to progress story
+            if(e.keyCode == 32){
+                getNext();
+            }
+        } else {
+            // skipping allowed?
+        }
+    }
+
+    // click is also acceptible
+    $("#msgBox").click(function() {
+        if(!isTyping) {
+            getNext();
+       } else {
+           // skipping allowed?
+       }
+    });
+}
 
 /*
  * Starts a brand new game 
@@ -74,19 +97,15 @@ function typeWriter(str, spd) {
 function startGame() {
     // fade out titlescreen
     stopBgm();
+    // reset variables
+    curr_line = 0;
+    document.getElementById("sprite").src="";
+    document.getElementById("background").src="";
     fadeout("#titlescreen", 3000, function() {
        // wait for fadeout to finish
         getNext();
-        document.body.onkeyup = function(e){
-            if(!isTyping) {
-                 // wait for space to progress story
-                if(e.keyCode == 32){
-                    getNext();
-                }
-            } else {
-                // skipping allowed?
-            }
-        }
+        setNextTrigger();
+
     }); 
 }
 
@@ -128,16 +147,24 @@ function getNext() {
           // change background music
         playBgm(curr_step.bgm);
         curr_line++;
+        getNext();
       }
       if (undefined !== curr_step.se) {
         // play sound effect (once)
         playSe(curr_step.se);
         curr_line++;
+        getNext();
       }
       if (undefined !== curr_step.msg) {
         // update name if necessary
         if (undefined !== curr_step.name) {
 
+        }
+        if(undefined !== curr_step.color) {
+            // change text color
+            document.getElementById("msgBox").style.color = curr_step.color;
+        } else { // default color
+            document.getElementById("msgBox").style.color = "#ffe7b7";
         }
         // display text
         typeWriter(curr_step.msg, DEFAULT_SPEED);
@@ -182,19 +209,22 @@ for(let i = 0; i < possibleAns.length; i++) {
 // Pause menu button display functions
 function on() {
     setTimestamp();
-    fadein("#pauseOverlay", 1000);
+    document.getElementById("saveBtn").addEventListener("click", function() {renderSaveFiles(true)}, false);
+    document.getElementById("loadBtn").addEventListener("click",  function() {renderSaveFiles(false)}, false);
+    fadein("#pauseOverlay", 500);
 }
 
 function off() {
     // start timer again
     currTimer = new Date();
-    fadeout("#pauseOverlay", 2000);
+    fadeout('.overlay', 200);
+    fadeout("#pauseOverlay", 1000);
 }
 
 function gotoTitle() {
     off();
     // switch to titlescreen music
-    playBgm("danse-morialta-by-kevin-macleod.mp3");
+    playBgm("ghosts_walk_here.mp3");
     fadein("#titlescreen", 3000);
 }
 
@@ -222,40 +252,38 @@ function fadein(element, speed, callback) {
 
 function playBgm(bgm) {
     // fade out last bgm (if applicable)
-    if(curr_bgm != undefined) { 
-        console.log("fading out");
-        curr_bgm.fade(0.5, 0, 2000); // fade out old bgm
-        curr_bgm.on('fade', function(){ 
-            console.log('faded bgm. Switching to next');
+    curr_bgm_src = bgm;
+    if(curr_bgm != undefined) {
+        stopBgm(function() {
+            console.log("Switching bgms");
             console.log("playing bgm " + bgm_link + bgm);
-            // switch bgm
+            curr_bgm.unload();
             let another_bgm = new howler.Howl({
                 src: [bgm_link + bgm],
                 autoplay: true,
                 loop: true,
                 volume: 0.5,
-                onfade: function(){
-                    curr_bgm.on('fade', function(){}); 
-                    curr_bgm = another_bgm;
+                onload: function() {
+                    // fade in new bgm
+                    this.fade(0,1.0,3000);
+                    curr_bgm = this;
                 }
             });
-            // fade in new bgm
-            another_bgm.fade(0,0.5,3000);
+      
         });
         return;
-    } else {
-        console.log("playing bgm " + bgm_link + bgm);
-        // just create new Howl and play
-        curr_bgm = new howler.Howl({
-            src: [bgm_link + bgm],
-            autoplay: true,
-            loop: true,
-            volume: 0.0
-        });
-        // fade in new bgm
-        curr_bgm.fade(0,1.0,3000);
-    }
+    } 
+    console.log("playing bgm " + bgm_link + bgm);
+    // just create new Howl and play
+    curr_bgm = new howler.Howl({
+        src: [bgm_link + bgm],
+        autoplay: true,
+        loop: true,
+        volume: 0.0
+    });
 
+    // fade in new bgm
+    curr_bgm.fade(0,1.0,3000);
    
 }
 
@@ -268,10 +296,13 @@ function pauseBgm() {
     });
 }
 
-function stopBgm() {
+function stopBgm(callback) {
     curr_bgm.fade(1, 0, 2000);
     curr_bgm.on('fade', function(){
         curr_bgm.stop();
+        if(callback) {
+            callback();
+        }
     });
 }
 
@@ -290,7 +321,7 @@ function playSe(se) {
         }
     } else {
         console.log("Playing se: " + se_link + se);
-        se = new howler.Howl({
+        let s = new howler.Howl({
             src: [se_link + se[0]],
             autoplay: true,
             volume: 0.7,
@@ -303,6 +334,10 @@ function playSe(se) {
 
 // -------- SAVE/LOAD FUNCTIONS --------
 // see https://stackoverflow.com/questions/34847231/how-to-save-progress-in-an-html-game
+
+function closeSaveLoadMenu() {
+    fadeout("#saveLoadMenuContainer", 500);
+}
 
 function secondsToHMS(secs) {
     // ref: https://stackoverflow.com/questions/26580509/calculate-time-difference-between-two-date-in-hhmmss-javascript
@@ -332,7 +367,7 @@ function save(slotNum) {
         currLine: curr_line,
         currSprite: document.getElementById("sprite").src,
         currBackground: document.getElementById("background").src,
-        currBgm: curr_bgm,
+        currBgm: curr_bgm_src,
         timestamp: "",
         screenshot: "",
         switches: []
@@ -355,12 +390,19 @@ function save(slotNum) {
   // grabs all save files from localstorage and displays them in a list for saving or loading
   // saveOrLoad == true if save, false if load
 function renderSaveFiles(saveOrLoad) {
+    if(saveOrLoad) {
+        document.getElementById("sl").innerHTML = "Save Game";
+    } else {
+        document.getElementById("sl").innerHTML = "Load Game";
+    }
+    console.log("Entering Save/Load Menu");
     $("#saveLoadMenu").empty();
     // populate (5) save file slots
     let slots = getSlots();
 
     for(let i = 0; i < slots.length; i++) {
         let saveSlot = document.createElement('li');
+        $("#saveLoadMenu").append(saveSlot);
         saveSlot.id = "save_" + i;
         saveSlot.innerHTML = i;
         if(slots[i] != null) { 
@@ -369,23 +411,25 @@ function renderSaveFiles(saveOrLoad) {
 
             // TODO: Append previous save data (timestamp, screenshot, etc)
 
+            
             $("#" + saveSlot.id).click(function() {
                 // -------------- SAVING --------------
                 if(saveOrLoad) {
                     // ask user for permission to override
                     console.log("Prompt User: Save override?");
-                    vex.dialog.confirm({
-                        message: 'Overwrite previous save data?',
-                        callback: function (value) {
-                            if (value) {
-                                save(i);
-                                // TODO: update li appearance with new save data
-                                
-                                // TODO: Play sound effect
-                                vex.dialog.alert('Successfully saved.');
-                            } 
-                        }
-                    });
+                    fadein("#overwriteContainer", 200), function() {
+                        // configure button to save
+                        $("#yesOverwriteBtn").click(function() {
+                            // override slot
+                            save(i);
+                            // update slot UI to reflect new data
+                            saveSlot.innerHTML = "TEST SAVE";
+                            // play save se
+
+                            console.log("Overridden save slot");
+                        });
+                    }
+                    
                 } else {
                     // -------------- LOADING --------------
                     console.log("Loading save slot " + i);
@@ -403,7 +447,7 @@ function renderSaveFiles(saveOrLoad) {
                     // TODO: update li appearance with new save data
                     
                     // TODO: Play sound effect
-                    vex.dialog.alert('Successfully saved.');
+                    // vex.dialog.alert('Successfully saved.');
                 } else {
                     // Play error sound effect --> Cannot load no data slot
                     console.log("Cannot Load: No Data");
@@ -411,7 +455,6 @@ function renderSaveFiles(saveOrLoad) {
             });
 
         }
-        $("#saveLoadMenu").append(saveSlot);
         
     }
     // open save page
@@ -432,11 +475,18 @@ function load(saveFile) {
      // hide save/load screen
     fadeout("#saveLoadMenuContainer", 500, function() {
         fadeout("#titlescreen", 1000, function() {
-            playBgm(saveFile.currBgm);
-            getNext();
+            fadeout("#pauseOverlay",500, function() {
+                playBgm(saveFile.currBgm);
+                getNext();
+                setNextTrigger();
+            }) 
         });
     });
    
-  
+}
+
+function closeOverwrite() {
+    // hides save confirmation box
+    fadeout("#overwriteContainer", 200);
 }
 
