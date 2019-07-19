@@ -22,6 +22,7 @@
   "dependencies": {
     "audio-play": "^2.2.1",
     "howler": "^2.1.2",
-    "typed.js": "^2.0.10"
+    "typed.js": "^2.0.10",
+    "vex-js": "^4.1.0"
   }
 }

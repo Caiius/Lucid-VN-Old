@@ -84,11 +84,11 @@ body {
 .overlay {
     position: fixed; /* Sit on top of the page content */
     width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
+    height: auto; /* Full height (cover the whole page) */
     top: 0; 
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 50px; /* Leaving some space for menu and log buttons */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
 }
@@ -265,11 +265,77 @@ input:focus {
 
 /* ----------- SAVE/LOAD SCREEN ----------- */
 
+ #saveLoadMenuContainer {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,1); /* Black background with opacity */
+    z-index: 4; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+ }
+
+ .centerContainer {
+    position: absolute;
+    font-family: 'Crimson Text', serif;
+    top: 50%;
+    left: 50%;
+    height:auto;
+    color: #ffe7b7;
+    transform: translate(-50%,-50%);
+    padding:25px;
+    display: inline-flex;
+    /* align-items items in column */
+    flex-direction: column;
+    /* center items horizontally */
+    align-items: center;
+    /* center items vertically */
+    justify-content: center;
+    text-align: center;
+ }
+
  #saveLoadMenu {
-     width:100%;
-     height:100%;
-     background-color: black;
-     /* z-index: 4; */
+    list-style-type: none;
+    position: relative;
+    height:auto;
+    margin: auto;
+    padding: 0;
+ }
+
+ #saveLoadMenu li {
+    color: #ffe7b7;
+    font-size: 20px;
+    background-color: #1d1d1d;
+    border-color: #ffe7b7;
+    border-style: solid;
+    border-width: 1px;
+    width:600px;
+    height:auto;
+    padding: 10px;
+ }
+
+ #backBtn {
+    width:100px;
+    font-family: 'Crimson Text', serif;
+    height:auto;
+    color: #ffe7b7;
+    font-size: 24px;
+    padding: 5px;
+    background-color: transparent;
+    border: 1px solid transparent;
+    float:left;
+ }
+
+ #backBtn:hover {
+    font-weight: 1000;
+ }
+
+ .saveLoadHeader {
+     font-size: 50px;
  }
 
  #logOverlay {
