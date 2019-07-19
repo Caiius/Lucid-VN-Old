@@ -5,8 +5,6 @@
     <title>Lucid</title>
     <link rel="stylesheet" type="text/css" href="src/css/system.css">
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="node_modules/vex-js/sass/vex.sass" />
-    <link rel="stylesheet" href="node_modules/vex-js/sass/vex-theme-os.sass" />
   </head>
   <body>
     <!-- TITLESCREEN -->
@@ -14,7 +12,7 @@
       <h1 id="title">Lucid</h1>
       <div id="startMenu">
         <button class="startMenuBtn" onclick="startGame()">Start</button>
-        <button class="startMenuBtn">Load</button>
+        <button class="startMenuBtn" id="startLoadBtn">Load</button>
         <button class="startMenuBtn">Exit</button>
       </div>
     </div>
@@ -22,22 +20,31 @@
     <div id="pauseOverlay">
       <div id="pauseMenu">
         <span>Menu</span>
-        <button class="pMenuBtn" onclick="renderSaveFiles()">Save</button>
-        <button class="pMenuBtn">Load</button>
+        <button class="pMenuBtn" id="saveBtn">Save</button>
+        <button class="pMenuBtn" id="loadBtn">Load</button>
         <button class="pMenuBtn" onclick="gotoTitle()">Titlescreen</button>
         <button class="pMenuBtn">Settings</button>
         <button class="pMenuBtn" onclick="off()">Resume</button>
       </div>
     </div>
 
+    <!-- OVERWRITE SAVE CONFIRMATION BOX -->
+    <div id="overwriteContainer">
+      <div class=".centerContainer">
+        <span id="overwriteTxt">Overwrite previous save data?</span><br>
+        <button class="omenuBtn" id="yesOverwriteBtn">Yes</button>
+        <button class="omenuBtn" onclick="closeOverwrite()">No</button>
+      </div>
+    </div>
+
     <!-- SAVE/LOAD MENU -->
     <div id="saveLoadMenuContainer">
       <div class= "centerContainer">
-        <div class="saveLoadHeader">Save Game</div><br>
+        <div class="saveLoadHeader" id="sl">Save Game</div>
         <ul id="saveLoadMenu">
           
         </ul><br>
-        <button id="backBtn">Back</button>
+        <button id="backBtn" onclick="closeSaveLoadMenu()">&lt;&lt; Back</button>
       </div>
     </div>
 
@@ -46,9 +53,7 @@
 
     <!-- CHOICE BOX -->
     <div class="overlay" >
-      <div id="choice">
-
-      </div>
+      <div id="choice"></div>
     </div>
 
     <!-- CHARACTER/BACKGROUND SPRITE/IMG -->
@@ -57,6 +62,7 @@
 
     <!-- FOOTER -->
     <div id="footer">
+      <div id="nameBox"></div>
       <div id="msgBox"></div>
       <!-- <div id="inputBox">> </div>
       <input type="text" id="userInput" maxlength="50"> -->
