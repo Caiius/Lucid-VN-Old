@@ -6,18 +6,18 @@ const r = "Remus"; // Remus Hawthorn, artist and owner of mansion
 const DEFAULT_SPEED = 30;
 
 var story = [
-    // { msg: "An endless sea stretches out before you.  There's no waves,  no ripples,  nothing."},
+    // { msg: "An endless sea stretches out beyond the horizon.  There's no waves,  no ripples,  nothing."},
     // { msg: "The sky is reflected almost perfectly onto the water,  the clouds loftily floating by."},
     // { msg: "Your body feels heavy,  sleepy almost..."},
     // { msg: "Soon enough,  it all just fades away...."},
-    // { msg: "............" },
-    // { msg: "........................"},
+    // { msg: "(............)" },
+    // { msg: "(........................H-Huh?)"},
     // { msg: "It's pitch black and silent.  You can't see or hear a thing.  Your head throbs " + 
     // "painfully, and your ears ring with an unpleasantly high pitch."},
     // {se: ["woodCreak.mp3"]},
     // { msg: "Something creaks from underneath you.  A wooden chair, perhaps?  Ropes tightly bind your " +
     // "wrists and feet to its arms and legs,  digging uncomfortably into your skin."},
-    // {msg:"........."},
+    // {msg:"(.........)"},
     // {se: ["ropeCreak.mp3"]},
     // {msg:"Struggling,  you attempt to wiggle free from your bounds."},
     // {se: ["ropeCreak.mp3"]},
@@ -40,14 +40,14 @@ var story = [
     // "hard ground.  The sound of creaking metal and angry hissing fills the air,  like a sleeping " + 
     // "metallic beast was coming back to life."},
     {bgm: "train_moving.wav"},
-    {msg: "You could recognize this churning sound.  A train?"},
-    {msg: "What were you doing on a train?"},
+    {msg: "This churning sound.  A train?"},
+    {msg: "(What am I doing on a train?)"},
     {msg: "You desperately wrack your brain, trying to remember something, anything!"},
     {msg: "The moment something seems to flicker in your mind,  a searing hot pain shoots through your "+
     "temples,  drowning out any possibility of a memory with excruciating static.  The pain disappears "+
     "almost as soon as it appeared."},
-    {msg:"…It’s no good.  You just can’t remember anything without bringing on a debilitating migraine.  "+
-    "You shake your head.  How cliche."}
+    {msg:"(…I-it’s no good.  I just can’t remember anything without bringing on a debilitating migraine.  "+
+    "How cliche.)"}
 
   ];
 
