@@ -7,12 +7,28 @@
     user-select: none;
 }
 
-
 body {
     background-color: black;
     color: #ffe7b7;
     font-family: 'Crimson Text', serif;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    background: #1d1d1d;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #ffe7b7;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #ffd768; 
+  }
 
 /* ----------- TITLESCREEN ----------- */
 
@@ -56,7 +72,7 @@ body {
     font-size: 20px;
     padding: 5px;
     text-align: center;
-    display: none;
+    /* display: none; */
 }
 
 .startMenuBtn:hover {
@@ -85,12 +101,12 @@ body {
     position: fixed; /* Sit on top of the page content */
     width: 100%; /* Full width (cover the whole page) */
     height: auto; /* Full height (cover the whole page) */
+    display: none;
     top: 0; 
     left: 0;
     right: 0;
     bottom: 50px; /* Leaving some space for menu and log buttons */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
 }
 
 #choice {
@@ -142,7 +158,7 @@ body {
 
 #msgBox {
     background-color: #1d1d1d;
-    padding-top: 30px;
+    padding-top: 25px;
     padding-bottom: 30px;
     padding-left:40px;
     padding-right: 40px;
@@ -150,10 +166,22 @@ body {
     font-size: 20px;
     font-family: 'Crimson Text', serif;
     opacity: 0.8;
+    color: rgba(255,231,183, 1.0);
     border-color: #ffe7b7;
-    border-style: solid;
-    border-width: 1px;
+    border-style: double;
+    border-width: 4px;
+}
 
+#nameBox {
+    background-color: #1d1d1d;
+    height:10px;
+    font-size: 20px;
+    font-family: 'Crimson Text', serif;
+    opacity: 0.8;
+    border-color: #ffe7b7;
+    border-style: double;
+    border-width: 4px;
+    display: none; /* Hidden by default */
 }
 
 /* #inputBox {
@@ -216,14 +244,13 @@ input:focus {
     bottom: 0;
     background-color: rgba(0,0,0,0.5); /* Black background with opacity */
     z-index: 3; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
   }
 
   #pauseMenu {
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: 50px;
+    font-size: 40px;
     height:auto;
     color: #ffe7b7;
     background-color: #1d1d1d;
@@ -276,7 +303,6 @@ input:focus {
     bottom: 0;
     background-color: rgba(0,0,0,1); /* Black background with opacity */
     z-index: 4; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
  }
 
  .centerContainer {
@@ -301,8 +327,8 @@ input:focus {
  #saveLoadMenu {
     list-style-type: none;
     position: relative;
-    height:auto;
-    margin: auto;
+    height:400px;
+    overflow-y: scroll;
     padding: 0;
  }
 
@@ -313,17 +339,24 @@ input:focus {
     border-color: #ffe7b7;
     border-style: solid;
     border-width: 1px;
-    width:600px;
+    width:500px;
     height:auto;
-    padding: 10px;
+    padding: 45px;
+    margin: 15px;
+    margin-bottom: auto;
  }
+
+ 
+ #saveLoadMenu li:hover {
+    background-color: #353535;
+ } 
 
  #backBtn {
     width:100px;
     font-family: 'Crimson Text', serif;
     height:auto;
     color: #ffe7b7;
-    font-size: 24px;
+    font-size: 20px;
     padding: 5px;
     background-color: transparent;
     border: 1px solid transparent;
@@ -338,6 +371,40 @@ input:focus {
      font-size: 50px;
  }
 
+ #overwriteContainer {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7); /* Black background with opacity */
+    z-index: 5; 
+ }
+
+ #overwriteTxt {
+     text-align: center;
+ }
+
+ .omenuBtn {
+    margin-top: 5px;
+    margin-left: 10px;
+    background-color: #1d1d1d;
+    color: #ffe7b7;
+    height:20px;
+    font-family: 'Crimson Text', serif;
+    text-align: center;
+    padding: 0;
+    width:80px;
+    border-color: #ffe7b7;
+    border-style: solid;
+    border-width: 1px;
+    height:auto;
+ }
+
+/* ----------- LOG SCREEN ----------- */
  #logOverlay {
     position: fixed; /* Sit on top of the page content */
     display: none; /* Hidden by default */
@@ -349,5 +416,6 @@ input:focus {
     bottom: 0;
     background-color: rgba(0,0,0,0.5); /* Black background with opacity */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
  }
+
+
