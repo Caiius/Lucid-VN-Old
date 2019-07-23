@@ -13,6 +13,7 @@
       <div id="startMenu">
         <button class="startMenuBtn" onclick="startGame()">Start</button>
         <button class="startMenuBtn" id="startLoadBtn">Load</button>
+        <button class="startMenuBtn" id="galleryBtn">Collection</button>
         <button class="startMenuBtn">Exit</button>
       </div>
     </div>
@@ -30,10 +31,12 @@
 
     <!-- OVERWRITE SAVE CONFIRMATION BOX -->
     <div id="overwriteContainer">
-      <div class=".centerContainer">
+      <div class="centerContainer">
         <span id="overwriteTxt">Overwrite previous save data?</span><br>
-        <button class="omenuBtn" id="yesOverwriteBtn">Yes</button>
-        <button class="omenuBtn" onclick="closeOverwrite()">No</button>
+        <div id="overwriteBtns">
+          <button class="omenuBtn" id="yesOverwriteBtn">Yes</button>
+          <button class="omenuBtn" onclick="closeOverwrite()">No</button>
+        </div>
       </div>
     </div>
 
