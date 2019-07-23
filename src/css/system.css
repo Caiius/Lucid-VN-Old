@@ -322,6 +322,7 @@ input:focus {
     /* center items vertically */
     justify-content: center;
     text-align: center;
+    z-index: 4;
  }
 
  #saveLoadMenu {
@@ -402,6 +403,10 @@ input:focus {
     border-style: solid;
     border-width: 1px;
     height:auto;
+ }
+
+ #overwriteBtns {
+     display:inline-block;
  }
 
 /* ----------- LOG SCREEN ----------- */
