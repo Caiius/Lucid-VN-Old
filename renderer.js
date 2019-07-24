@@ -12,7 +12,7 @@ let se_link = "./src/music/se/";
 let curr_bgm;
 let curr_bgm_src = '';
 let isTyping = false;
-let timestamp ; // stores total timestamp value
+let timestamp = 0; // stores total timestamp value
 let startTime; // records start time of current session
 let curr_line = 0;
 
@@ -96,6 +96,7 @@ function setNextTrigger(){
  */
 function startGame() {
     // fade out titlescreen
+    startTime = new Date();
     stopBgm();
     // reset variables
     curr_line = 0;
@@ -216,7 +217,7 @@ function on() {
 
 function off() {
     // start timer again
-    currTimer = new Date();
+    startTime = new Date();
     fadeout('.overlay', 200);
     fadeout("#pauseOverlay", 1000);
 }
@@ -339,20 +340,27 @@ function closeSaveLoadMenu() {
     fadeout("#saveLoadMenuContainer", 500);
 }
 
-function secondsToHMS(secs) {
-    // ref: https://stackoverflow.com/questions/26580509/calculate-time-difference-between-two-date-in-hhmmss-javascript
-    function z(n){return (n<10?'0':'') + n;}
-    var sign = secs < 0? '-':'';
-    secs = Math.abs(secs);
-    return sign + z(secs/3600 |0) + ':' + z((secs%3600) / 60 |0) + ':' + z(secs%60);
+function msToHMS(duration) {
+    // see: https://coderwall.com/p/wkdefg/converting-milliseconds-to-hh-mm-ss-mmm
+    var milliseconds = parseInt((duration%1000)/100)
+        , seconds = parseInt((duration/1000)%60)
+        , minutes = parseInt((duration/(1000*60))%60)
+        , hours = parseInt((duration/(1000*60*60))%24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    return hours + ":" + minutes + ":" + seconds;
   }
 
 // returns current total timestamp for current save file
 function setTimestamp() {
     let endTime = new Date();
     var diffSeconds = endTime - startTime;
-    let sessionTime = secondsToHMS(diffSeconds);
-    timestamp += sessionTime;
+    timestamp += diffSeconds;
+    return timestamp;
+    //console.log(timestamp);
 }
 
 // saves all current values and booleans to an array
@@ -361,14 +369,14 @@ function fillSwitches() {
 }
 
 function save(slotNum) {
-    let timestmp = setTimestamp();
+    console.log("Overwriting save...");
     let currSave = {
         save_slot: slotNum,
         currLine: curr_line,
         currSprite: document.getElementById("sprite").src,
         currBackground: document.getElementById("background").src,
+        time: timestamp,
         currBgm: curr_bgm_src,
-        timestamp: "",
         screenshot: "",
         switches: []
     }
@@ -399,36 +407,42 @@ function renderSaveFiles(saveOrLoad) {
     $("#saveLoadMenu").empty();
     // populate (5) save file slots
     let slots = getSlots();
-
+    console.log(slots);
     for(let i = 0; i < slots.length; i++) {
         let saveSlot = document.createElement('li');
         $("#saveLoadMenu").append(saveSlot);
         saveSlot.id = "save_" + i;
+
         saveSlot.innerHTML = i;
         if(slots[i] != null) { 
             // save slot is occupied
             let currSlot = JSON.parse(slots[i]);
-
+            console.log(currSlot);
             // TODO: Append previous save data (timestamp, screenshot, etc)
-
+            if (+currSlot.time > 0) {
+                saveSlot.innerHTML = msToHMS(+currSlot.time);
+            } 
             
             $("#" + saveSlot.id).click(function() {
                 // -------------- SAVING --------------
                 if(saveOrLoad) {
                     // ask user for permission to override
                     console.log("Prompt User: Save override?");
-                    fadein("#overwriteContainer", 200), function() {
+                    fadein("#overwriteContainer", 200, function() {
                         // configure button to save
                         $("#yesOverwriteBtn").click(function() {
                             // override slot
                             save(i);
                             // update slot UI to reflect new data
-                            saveSlot.innerHTML = "TEST SAVE";
+                            saveSlot.innerHTML = msToHMS(timestamp);
                             // play save se
 
                             console.log("Overridden save slot");
+                            // close save screen
+                            closeOverwrite();
+                            //fadeout("#saveLoadMenuContainer", 500);
                         });
-                    }
+                    });
                     
                 } else {
                     // -------------- LOADING --------------
@@ -439,15 +453,17 @@ function renderSaveFiles(saveOrLoad) {
                 
             });
         } else {
+            saveSlot.innerHTML = "No data";
             $("#" + saveSlot.id).click(function() {
                 // render free slot
                 if (saveOrLoad) {
                     // Just save straight into the free spot
                     save(i);
                     // TODO: update li appearance with new save data
+                    saveSlot.innerHTML = msToHMS(+currSlot.time);
                     
                     // TODO: Play sound effect
-                    // vex.dialog.alert('Successfully saved.');
+
                 } else {
                     // Play error sound effect --> Cannot load no data slot
                     console.log("Cannot Load: No Data");
