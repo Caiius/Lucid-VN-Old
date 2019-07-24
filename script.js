@@ -40,7 +40,7 @@ var story = [
     // "hard ground.  The sound of creaking metal and angry hissing fills the air,  like a sleeping " + 
     // "metallic beast was coming back to life."},
     {bgm: "train_moving.wav"},
-    {msg: "This churning sound.  A train?"},
+    {msg: "You could recognize this churning sound.  A train?"},
     {msg: "(What am I doing on a train?)"},
     {msg: "You desperately wrack your brain, trying to remember something, anything!"},
     {msg: "The moment something seems to flicker in your mind,  a searing hot pain shoots through your "+
