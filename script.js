@@ -46,18 +46,75 @@ var story = [
     {msg: "The moment something seems to flicker in your mind,  a searing hot pain shoots through your "+
     "temples,  drowning out any possibility of a memory with excruciating static.  The pain disappears "+
     "almost as soon as it appeared."},
-    {msg:"(…I-it’s no good.  I just can’t remember anything without bringing on a debilitating migraine.  "+
-    "How cliche.)"}
+    {msg:"(…I-it’s no good.)"},
+    {msg: "How cliche."},
+    {msg:"Despite your convenient amnesia,  the hair on the back of your neck just would stand down,  and your body felt stiff,  as if you were long anticipating some sort of "+
+    "catastrophe to happen.  Something was very obviously wrong here."},
+    {choice: "(I better try to find a way to get out of here.)", ans: [
+      {msg: "Call for help", next: "call"},
+      {msg: "Feel your way around", next: "feel"}
+    ]},
+    {label: "call", msg: "Hopefully whoever tied you to this chair wouldn't mind if you politely asked for some assistance.  Surely you aren't the only living person on this " +
+    "train?  You inhale,  preparing to unleash a primal scream."},
+    {msg: "*Wheeze*"},
+    {msg: "The saddest rasp you ever heard escapes from your lips."},
+    {msg: "(Looks like some things just don't change.)"},
+    {label: "feel", msg: "Crouching down,  you carefully inch forwards until you could feel a cold metal wall.  You then let your fingers guide you throughout the compartment."},
+    {msg: "(Huh?  What's this?)"},
+    {msg: "Soon enough,  you bump into something further back,  something hard, leathery and rectangular."},
+    {msg: "(It feels like a suitcase.  Perhaps I'm stuck in a luggage compartment?)"},
+    {msg: "Sure enough,  you soon could feel what could only be a handle and several tightly closed metal clasps. "},
+    // {se: [lock]},
+    {msg: "(Damn,  it's locked!)"},
+    // {se: [headPounding]}, // distort screen again?
+    {msg: "(Ugh...  The ringing...  it's getting worse...)"},
+    {msg: "You fall to your knees,  the intense pain cutting through your temples unforgivingly like an ice pick."},
+    {msg: "(...My head...  it's splitting!)"},
+    {msg: "(uuUuuaARGHH!!)"},
+    // {se: "[]"}, // Maybe some sort of sharp sound?
+    // {bgImg: "white.jpg"}, // distortion continues
+    {msg: "(W-what... what the hell is happening?)"},
+    // {sprite: ""} // show ghostly girl kneeling in front of the open suitcase with a flashlight --> key position 
+    {se: ["surprise.wav"]},
+    {msg: "(Who is that?  A... woman?)"},
+    {msg: "Still confused and wincing in pain, you tentatively reach out a hand."},
+    {img: "passThrough.jpg"},
+    {se: ["surprise.wav"]},
+    {msg: "!!!"},
+    {msg: "Recoiling, you jerk back instantly."},
+    {msg: "(No way...  I-  I must be dreaming right now.)"},
+    {msg: "But it was no dream.  And somewhere in dark recesses of your mind,  you even feel a spark of recognition."},
+    {msg: "(...Do I know this person?)"},
+    {msg: "You instinctively reach towards your neck, continuing to observe the ghostly figure."},
+    {msg: "She's hunched over the suitcase,  a flashlight in hand.  She appears to be examining "+
+    "something else within the case,  but you couldn't quite make out what it was.  Her wrists were slightly "+
+    "red as well,  and you could just make out the rope markings.  So she's in the same position as you right now."},
+    {msg: "Something shiny glints on the floor by the woman's foot."}, 
+    // {se: ["realization"]},
+    {msg: "(A key!)"},
+    {msg: "So there must be a key somewhere in this compartment!  Now it's just a matter of figuring out " +
+    "where she got it from."},
+    {msg: "Suddenly,  the air starts to turn cold and clammy,  the strange miasma sending shivers down your spine."},
+    {img: "hide"},
+    {msg:" Soon enough, the whole scene dissipates, leaving you with only the slight feeling of pins and "+
+    "needles as well as numerous biting questions.  Your vision clears too,  although it was still pitch black,  " +
+    "so that didn't really matter."},
+    {msg: "(What just happened?)"},
+    {msg: "Did you just have some sort of spontaneous hallucination?  You shake your head. "},
+    {label: "introKeyChoice", choice: "You didn't have time to figure out the story behind these foreboding ghostly visions.  That's " +
+    "right,  you got to find that key.  Then you give yourself permission to freak out.", ans: [
+      {msg:"Search the right side", next:"introRight"},
+      {msg:"Search the aisle center", next:"introCenter"},
+      {msg:"Search the left side", next:"introLeft"}
+    ]},
+    {label:"introRight", msg: ""},
+    {label:"introCenter", msg: ""},
+    {label:"introLeft", msg: ""},
+
+
+    // You feel something resembling hope starts to bubble in your chest. 
 
   ];
 
-// EX.) CHOICE MENU
-//   { choice: "Do you like it?", ans: [
-//     { msg: "yes", next: "like_yes" },
-//     { msg: "no", next: "like_no" },
-//   ] },
-
-// EX.) SPRITE/BACKGROUND IMAGE CHANGE
-// { sprite: " ", bgImg: ""}, 
 
 
