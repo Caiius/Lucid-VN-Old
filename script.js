@@ -6,6 +6,7 @@ const r = "Remus"; // Remus Hawthorn, artist and owner of mansion
 const DEFAULT_SPEED = 30;
 
 var story = [
+// CHAPTER 1: 
     // { msg: "An endless sea stretches out beyond the horizon.  There's no waves,  no ripples,  nothing."},
     // { msg: "The sky is reflected almost perfectly onto the water,  the clouds loftily floating by."},
     // { msg: "Your body feels heavy,  sleepy almost..."},
@@ -100,19 +101,29 @@ var story = [
     "needles as well as numerous biting questions.  Your vision clears too,  although it was still pitch black,  " +
     "so that didn't really matter."},
     {msg: "(What just happened?)"},
-    {msg: "Did you just have some sort of spontaneous hallucination?  You shake your head. "},
-    {label: "introKeyChoice", choice: "You didn't have time to figure out the story behind these foreboding ghostly visions.  That's " +
-    "right,  you got to find that key.  Then you give yourself permission to freak out.", ans: [
+    {msg: "Did you just have some sort of spontaneous hallucination?  Maybe whoever " +
+    "tied you up drugged you as well."},
+
+    {label: "introKeyChoice", choice: " You shake your head.  You dodn't have time to figure out the story " +
+    "behind these foreboding ghostly visions.  That's right,  you got to find that key.  Then you give "+
+    "yourself permission to freak out.", ans: [
       {msg:"Search the right side", next:"introRight"},
       {msg:"Search the aisle center", next:"introCenter"},
       {msg:"Search the left side", next:"introLeft"}
     ]},
-    {label:"introRight", msg: ""},
-    {label:"introCenter", msg: ""},
-    {label:"introLeft", msg: ""},
+
+    {label:"introRight", msg: "Your eyes had adjusted to the dark,  so you could just make out the outline "+
+    "of something in the right back corner of the compartment."},
+    {msg: "(Now that I think about it,  I don't think this thing was here during my vision.)"},
+    {msg: "(It feels like some sort of statue.  Weird.)"},
+    {se: []},
+    {msg: "(Ah,  this sound.  I see.)"},
+    {label:"introCenter", msg: "(.................)"},
+    {msg: "(No,  I don't think anything is here.)", next: "introKeyChoice"},
+    {label:"introLeft", msg: "(...Nope.  I must be missing something from before.)", next: "introKeyChoice"},
 
 
-    // You feel something resembling hope starts to bubble in your chest. 
+    // You feel something resembling hope starting to bubble in your chest. 
 
   ];
 
