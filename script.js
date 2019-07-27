@@ -117,12 +117,33 @@ var story = [
     "of something in the right back corner of the compartment."},
     {msg: "(Now that I think about it,  I don't think this thing was here during my vision.)"},
     {msg: "(It feels like some sort of statue.  Weird.)"},
-    {se: []},
-    {msg: "(Ah,  this sound.  I see.)"},
+    //{se: []},
+    {msg: "(Ah,  I see.)", next: "smash"},
     {label:"introCenter", msg: "(.................)"},
     {msg: "(No,  I don't think anything is here.)", next: "introKeyChoice"},
     {label:"introLeft", msg: "(...Nope.  I must be missing something from before.)", next: "introKeyChoice"},
-
+    {label: "smash", msg: "Luckily, the statue wasn't very heavy.  You hold the statue high over your head.  You then pitch it straight downwards towards your feet."},
+    //{se:[]}, // statue smashing
+    {msg: "(There's the key.)"},
+    //{se: ["itemGet.mp3"]},
+    {msg:"(Now,  for the suitcase.)"},
+    {msg: "You fumble around with the key in the dark,  but it doesn't take too long to unlock the case."},
+    //{se: ["unlock"]},
+    {msg: "You quickly swing open the lid.  Inside,  you find a flashlight,  several articles of clothing,  a "+
+    "strange bronze medallion, and lastly,  a crumpled envelope."},
+    //{se: ["itemGet"]},
+    {msg: "Turning on the flashlight,  you pick up the envelope,  carefully removing the wrinkled letter inside.  Something nonsensical was hastily scribbled on the paper in smudged pencil."},
+    //{img:},
+    // start creepy but subtle creaking se; starts faint but gets louder until player turns around
+    {msg: "('Across the parallels,  find the perpendicular'...what does this even mean?)"},
+    {msg: "The pounding in your head gets slightly stronger,  then ebbs away."},
+    {msg: "Next,  you pick  up the medallion.  It's heavier and denser than it looks,  and is quite banged and scratched up."},
+    {msg:""},
+    {msg: "(I guess I'll just hold on to these for now.)"},
+    {msg: "[Obtained flashlight, medallion, and envelope]"},
+    {msg: "[Press the 'i' key or the inventory button in order to access your inventory.]"},
+    {se: [""]}, // sounds
+    {msg: "(...)"}
 
     // You feel something resembling hope starting to bubble in your chest. 
 
