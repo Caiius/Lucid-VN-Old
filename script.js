@@ -40,6 +40,7 @@ var story = [
     // {msg: "Suddenly, the ground under your feet lurches forwards,  hurling you face first onto the " +
     // "hard ground.  The sound of creaking metal and angry hissing fills the air,  like a sleeping " + 
     // "metallic beast was coming back to life."},
+    {sprite: "Joel.png"},
     {bgm: "train_moving.wav"},
     {msg: "You could recognize this churning sound.  A train?"},
     {msg: "(What am I doing on a train?)"},

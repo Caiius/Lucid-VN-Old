@@ -131,6 +131,7 @@ function getNext() {
             spriteRef.src = "./src/img/sprites/" + curr_step.sprite;
         }
         curr_line++;
+        getNext();
 
       } 
       if (undefined !== curr_step.bgImg) {
@@ -264,12 +265,12 @@ function log() {
 * Displays an image over everything. Used for displaying items, blurbs, etc... 
 *
 */
-function showImage(img, duration)  {
-    let img = document.getElementById("imageLayer");
-    if(img.src != "" ) { // handles sequention image displays
+function showImage(iimg, duration)  {
+    let pimg = document.getElementById("imageLayer");
+    if(pimg.src != "" ) { // handles sequention image displays
         hideImage(duration);
     }
-    img.src = img_link + img;
+    pimg.src = img_link + iimg;
     fadein("#imageLayer", duration);
     
 } 
