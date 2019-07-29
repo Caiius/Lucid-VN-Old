@@ -61,7 +61,7 @@ var story = [
     {msg: "Soon enough,  you bump into something further back,  something hard, leathery and rectangular."},
     {msg: "(It feels like a suitcase.  Perhaps I'm stuck in a luggage compartment?)"},
     {msg: "Sure enough,  you soon could feel what could only be a handle and several tightly closed metal clasps. "},
-    // {se: [lock]},
+    {se: ["lock.mp3"]},
     {msg: "(Damn,  it's locked!)"},
     // {se: [headPounding]}, // distort screen again?
     {msg: "(Ugh...  The ringing...  it's getting worse...)"},
@@ -111,7 +111,7 @@ var story = [
     "of something in the right back corner of the compartment."},
     {msg: "(Now that I think about it,  I don't think this thing was here during my vision.)"},
     {msg: "(It feels like some sort of statue.  Weird.)"},
-    //{se: []},
+    {se: ["glassShake.mp3"]},
     {msg: "(Ah,  I see.)", next: "smash"},
     {label:"introCenter", msg: "(.................)"},
     {msg: "(No,  I don't think anything is here.)", next: "introKeyChoice"},
@@ -122,7 +122,7 @@ var story = [
     {se: ["bell.mp3"]},
     {msg:"(Now,  for the suitcase.)"},
     {msg: "You fumble around with the key in the dark,  but it doesn't take too long to unlock the case."},
-    //{se: ["unlock"]},
+    {se: ["luggage.mp3"]},
     {msg: "You quickly swing open the lid.  Inside,  you find a flashlight,  several articles of clothing,  a "+
     "strange bronze medallion, and lastly,  a crumpled envelope."},
     {se: ["bell.mp3"]},
