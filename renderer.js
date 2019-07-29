@@ -2,11 +2,10 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-
 var Typed = require('typed.js');
 var howler = require('howler');
 const { dialog } = require('electron').remote;
-
+let titlescreenBgm = "Triads.mp3";
 let bgm_link = "./src/music/bgm/";
 let se_link = "./src/music/se/";
 let curr_bgm;
@@ -23,8 +22,13 @@ window.onload = function() {
     });
  
     // play titlescreen music
-    playBgm("ghosts_walk_here.mp3");
+    playBgm(titlescreenBgm);
     document.getElementById("startLoadBtn").addEventListener("click",  function() {renderSaveFiles(false)}, false);
+
+    // on button hover play sound
+    $(".startMenuBtn").mouseenter(function() {
+        playSe(["button.mp3"]);
+    });
 
     // document.getElementById("userInput").addEventListener("keyup", function(event) {
     //     if (mode === "input") { // if not in cutscene/choice
@@ -51,20 +55,21 @@ window.onload = function() {
 
 // performs a typewriter effect given an string
 function typeWriter(str, spd) {
-    document.getElementById("msgBox").innerHTML = "";
-    // add pause wherever there is two spaces
-    str = str.replace(/ +(?= )/g, ' ^500');
-    //console.log(str);
-    isTyping = true;
-    var typed = new Typed("#msgBox", {
-        strings: [str],
-        typeSpeed: spd,
-        showCursor: false,
-        onComplete: function(self) {
-            isTyping = false;
-        },
-    });
-    
+    if(!isTyping) {
+        document.getElementById("msgBox").innerHTML = "";
+        // add pause wherever there is two spaces
+        str = str.replace(/ +(?= )/g, ' ^500');
+        //console.log(str);
+        isTyping = true;
+        var typed = new Typed("#msgBox", {
+            strings: [str],
+            typeSpeed: spd,
+            showCursor: false,
+            onComplete: function(self) {
+                isTyping = false;
+            },
+        });
+    }
 }
 
 // -------- START MENU FUNCTIONS --------
@@ -82,13 +87,26 @@ function setNextTrigger(){
     }
 
     // click is also acceptible
-    $("#msgBox").click(function() {
-        if(!isTyping) {
-            getNext();
-       } else {
-           // skipping allowed?
-       }
-    });
+   document.getElementById("msgBox").addEventListener("click", _mouseListener);
+}
+
+var _mouseListener = function() {
+    if(!isTyping) {
+        getNext();
+   } else {
+       // skipping allowed?
+   }
+}
+
+function disableNextTrigger() {
+    console.log("disable getNext()");
+    document.body.onkeyup = function(e) {
+        if (e.keyCode == 32) {
+            return false;
+        }
+    };
+
+    document.getElementById("msgBox").removeEventListener("click", _mouseListener);
 }
 
 /*
@@ -102,11 +120,11 @@ function startGame() {
     curr_line = 0;
     document.getElementById("sprite").src="";
     document.getElementById("background").src="";
+    //setNextTrigger();
     fadeout("#titlescreen", 3000, function() {
        // wait for fadeout to finish
         getNext();
-        setNextTrigger();
-
+        
     }); 
 }
 
@@ -117,7 +135,7 @@ function find_label(labelStr) {
 }
 
 // -------- STORY PARSING/PATHING FUNCTIONS --------
-
+var rendering = false;
 // progresses story
 function getNext() {
     if(curr_line < story.length) { // if ending is not reached
@@ -126,9 +144,12 @@ function getNext() {
         // change sprite. If none, show nothing
         let spriteRef = document.getElementById("sprite");
         if(curr_step.sprite === " ") {
+            fadeout("#sprite", 300);
             spriteRef.src = "";
         } else {
+            fadeout("#sprite", 300); // hide last sprite in prep
             spriteRef.src = "./src/img/sprites/" + curr_step.sprite;
+            fadein("#sprite", 300);
         }
         curr_line++;
         getNext();
@@ -148,6 +169,7 @@ function getNext() {
     
         }
         curr_line++;
+        getNext();
       }
       if(undefined !== curr_step.img) {
           if(curr_step.img == "hide") {
@@ -197,22 +219,28 @@ function getNext() {
         } else {
           curr_line++;
         }
-  
       } else if (undefined !== curr_step.choice) { // if choice prompt available...
+        disableNextTrigger();
         console.log("Rendering choices");
         // display the question: current_step.choice
+        // disable getNext until choice is made
+        
         typeWriter(curr_step.choice, DEFAULT_SPEED);
+        fadein("#choiceOverlay", 200, function() {
+            fadein("#choice", 200);
+        });
         let possibleAns = curr_step.ans; // array of answers and labels
         // display the answers: current_step.ans
         renderChoices(possibleAns);
-
-  
       }
     }
   }
 
   function renderChoices(possibleAns) {
-for(let i = 0; i < possibleAns.length; i++) {
+    console.log(possibleAns);
+    if(!rendering) {
+        rendering = true;
+        for(let i = 0; i < possibleAns.length; i++) {
             let choiceBtn = document.createElement("button");
             choiceBtn.className = "choiceBtn";
             choiceBtn.innerHTML = possibleAns[i].msg;
@@ -223,9 +251,14 @@ for(let i = 0; i < possibleAns.length; i++) {
                 getNext(); // go on to choice results
                 fadeout("#choice", 500, function() {
                     $("#choice").empty(); // clear choices after selection
+                    setNextTrigger();
                 }) 
             });
+            if(i == possibleAns.length-1) {
+                rendering = false;
+            }
         }
+    }
   }
 
 
@@ -247,8 +280,9 @@ function off() {
 
 function gotoTitle() {
     off();
+    fadeout("#choiceOverlay",300);
     // switch to titlescreen music
-    playBgm("ghosts_walk_here.mp3");
+    playBgm(titlescreenBgm);
     fadein("#titlescreen", 3000);
 }
 
@@ -483,7 +517,7 @@ function renderSaveFiles(saveOrLoad) {
                             // update slot UI to reflect new data
                             saveSlot.innerHTML = msToHMS(timestamp);
                             // play save se
-
+                            playSe(["chime.mp3"]);
                             console.log("Overridden save slot");
 
                         });
@@ -511,7 +545,7 @@ function renderSaveFiles(saveOrLoad) {
                     saveSlot.innerHTML = msToHMS(+currSlot.time);
                     
                     // TODO: Play sound effect
-
+                    playSe(["chime.mp3"]);
                 } else {
                     // Play error sound effect --> Cannot load no data slot
                     console.log("Cannot Load: No Data");

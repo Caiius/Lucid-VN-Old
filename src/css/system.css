@@ -106,7 +106,20 @@ body {
     left: 0;
     right: 0;
     bottom: 50px; /* Leaving some space for menu and log buttons */
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    z-index: 4; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+
+#choiceOverlay {
+    position: fixed; /* Sit on top of the page content */
+    width: 100%; /* Full width (cover the whole page) */
+    height: auto; /* Full height (cover the whole page) */
+    display: none;
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 50px; /* Leaving some space for menu and log buttons */
+    z-index: 4; /* Specify a stack order in case you're using a different order for other elements */
 }
 
 #choice {
@@ -125,6 +138,7 @@ body {
     /* center items vertically */
     justify-content: center;
     text-align: center;
+    z-index: 5;
 }
 
 .choiceBtn {
@@ -151,7 +165,7 @@ body {
     margin-left: 75px;
     margin-right: 75px;
     position: fixed;
-    bottom: 20px;
+    bottom: 10px;
     width: 84%;
     box-sizing : border-box;
     z-index:3;
@@ -244,7 +258,7 @@ input:focus {
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-    z-index: 3; /* Specify a stack order in case you're using a different order for other elements */
+    z-index: 7; /* Specify a stack order in case you're using a different order for other elements */
   }
 
   #pauseMenu {
@@ -303,7 +317,7 @@ input:focus {
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,1); /* Black background with opacity */
-    z-index: 4; /* Specify a stack order in case you're using a different order for other elements */
+    z-index: 8; /* Specify a stack order in case you're using a different order for other elements */
  }
 
  .centerContainer {
@@ -431,7 +445,8 @@ input:focus {
     bottom:0;
     width: 340px;
     height: auto;
-    z-index: 2;
+    z-index: 2; 
+    display: none;
  }
 
  #background {

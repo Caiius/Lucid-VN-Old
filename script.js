@@ -7,10 +7,6 @@ const DEFAULT_SPEED = 30;
 
 var story = [
 // CHAPTER 1: 
-    // { msg: "An endless sea stretches out beyond the horizon.  There's no waves,  no ripples,  nothing."},
-    // { msg: "The sky is reflected almost perfectly onto the water,  the clouds loftily floating by."},
-    // { msg: "Your body feels heavy,  sleepy almost..."},
-    // { msg: "Soon enough,  it all just fades away...."},
     // { msg: "(............)" },
     // { msg: "(........................H-Huh?)"},
     // { msg: "It's pitch black and silent.  You can't see or hear a thing.  Your head throbs " + 
@@ -40,17 +36,16 @@ var story = [
     // {msg: "Suddenly, the ground under your feet lurches forwards,  hurling you face first onto the " +
     // "hard ground.  The sound of creaking metal and angry hissing fills the air,  like a sleeping " + 
     // "metallic beast was coming back to life."},
-    {sprite: "Joel.png"},
-    {bgm: "train_moving.wav"},
-    {msg: "You could recognize this churning sound.  A train?"},
-    {msg: "(What am I doing on a train?)"},
-    {msg: "You desperately wrack your brain, trying to remember something, anything!"},
-    {msg: "The moment something seems to flicker in your mind,  a searing hot pain shoots through your "+
-    "temples,  drowning out any possibility of a memory with excruciating static.  The pain disappears "+
-    "almost as soon as it appeared."},
-    {msg:"(…I-it’s no good.)"},
-    {msg: "How cliche."},
-    {msg:"Despite your convenient amnesia,  the hair on the back of your neck just would stand down,  and your body felt stiff,  as if you were long anticipating some sort of "+
+    // {bgm: "train_moving.wav"},
+    // {msg: "You could recognize this churning sound.  A train?"},
+    // {msg: "(What am I doing on a train?)"},
+    // {msg: "You desperately wrack your brain, trying to remember something, anything!"},
+    // {msg: "The moment something seems to flicker in your mind,  a searing hot pain shoots through your "+
+    // "temples,  drowning out any possibility of a memory with excruciating static.  The pain disappears "+
+    // "almost as soon as it appeared."},
+    // {msg:"(…I-it’s no good.)"},
+    // {msg: "How cliche."},
+    {msg:"Despite your convenient amnesia,  the hair on the back of your neck just wouldn't stand down,  and your body felt stiff,  as if you were long anticipating some sort of "+
     "catastrophe to happen.  Something was very obviously wrong here."},
     {choice: "(I better try to find a way to get out of here.)", ans: [
       {msg: "Call for help", next: "call"},
@@ -112,7 +107,6 @@ var story = [
       {msg:"Search the aisle center", next:"introCenter"},
       {msg:"Search the left side", next:"introLeft"}
     ]},
-
     {label:"introRight", msg: "Your eyes had adjusted to the dark,  so you could just make out the outline "+
     "of something in the right back corner of the compartment."},
     {msg: "(Now that I think about it,  I don't think this thing was here during my vision.)"},
@@ -123,15 +117,15 @@ var story = [
     {msg: "(No,  I don't think anything is here.)", next: "introKeyChoice"},
     {label:"introLeft", msg: "(...Nope.  I must be missing something from before.)", next: "introKeyChoice"},
     {label: "smash", msg: "Luckily, the statue wasn't very heavy.  You hold the statue high over your head.  You then pitch it straight downwards towards your feet."},
-    //{se:[]}, // statue smashing
+    {se:["smash.mp3"]}, 
     {msg: "(There's the key.)"},
-    //{se: ["itemGet.mp3"]},
+    {se: ["bell.mp3"]},
     {msg:"(Now,  for the suitcase.)"},
     {msg: "You fumble around with the key in the dark,  but it doesn't take too long to unlock the case."},
     //{se: ["unlock"]},
     {msg: "You quickly swing open the lid.  Inside,  you find a flashlight,  several articles of clothing,  a "+
     "strange bronze medallion, and lastly,  a crumpled envelope."},
-    //{se: ["itemGet"]},
+    {se: ["bell.mp3"]},
     {msg: "Turning on the flashlight,  you pick up the envelope,  carefully removing the wrinkled letter inside.  Something nonsensical was hastily scribbled on the paper in smudged pencil."},
     //{img:},
     // start creepy but subtle creaking se; starts faint but gets louder until player turns around
