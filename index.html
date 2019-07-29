@@ -9,13 +9,17 @@
   <body>
     <!-- TITLESCREEN -->
     <div id="titlescreen">
-      <h1 id="title">Lucid</h1>
       <div id="startMenu">
+        <h1 id="title">Lucid</h1>
         <button class="startMenuBtn" onclick="startGame()">Start</button>
         <button class="startMenuBtn" id="startLoadBtn">Load</button>
         <button class="startMenuBtn" id="galleryBtn">Collection</button>
         <button class="startMenuBtn">Exit</button>
       </div>
+      <div id="titlescreenParticleContainer">
+        <div id="particles-js"></div>
+      </div>
+      
     </div>
     <!-- PAUSE MENU -->
     <div id="pauseOverlay">
@@ -82,7 +86,8 @@
     <!-- You can also require other files to run in this process -->
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script src="./jquery-3.4.1.min.js"></script> 
-    <script src="./script.js"></script>   
+    <script src="./script.js"></script>  
+    <script src="./particles.min.js"></script> 
     <script src="./renderer.js"></script>
     <script>if (window.module) module = window.module;</script>
   </body>
