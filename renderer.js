@@ -16,10 +16,6 @@ let startTime; // records start time of current session
 let curr_line = 0;
 
 window.onload = function() {
-    // titlescreen on start
-    $("#titlescreen button").each(function(i) {
-        $(this).delay(700 * i).fadeIn(1000);
-    });
  
     // play titlescreen music
     playBgm(titlescreenBgm);
@@ -28,6 +24,11 @@ window.onload = function() {
     // on button hover play sound
     $(".startMenuBtn").mouseenter(function() {
         playSe(["button.mp3"]);
+    });
+
+    /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+    particlesJS.load('particles-js', './particlesjs-config.json', function() {
+        console.log('callback - particles.js config loaded');
     });
 
     // document.getElementById("userInput").addEventListener("keyup", function(event) {
@@ -120,7 +121,7 @@ function startGame() {
     curr_line = 0;
     document.getElementById("sprite").src="";
     document.getElementById("background").src="";
-    //setNextTrigger();
+    setNextTrigger();
     fadeout("#titlescreen", 3000, function() {
        // wait for fadeout to finish
         getNext();
