@@ -27,7 +27,7 @@ window.onload = function() {
     });
 
     /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
-    particlesJS.load('particles-js', './particlesjs-config.json', function() {
+    particlesJS.load('particles-js', './particlejs-config.json', function() {
         console.log('callback - particles.js config loaded');
     });
 
@@ -122,7 +122,7 @@ function startGame() {
     document.getElementById("sprite").src="";
     document.getElementById("background").src="";
     setNextTrigger();
-    fadeout("#titlescreen", 3000, function() {
+    fadeout("#titlescreen", 5000, function() {
        // wait for fadeout to finish
         getNext();
         
