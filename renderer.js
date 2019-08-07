@@ -5,7 +5,7 @@
 var Typed = require('typed.js');
 var howler = require('howler');
 const { dialog } = require('electron').remote;
-let titlescreenBgm = "Triads.mp3";
+let titlescreenBgm = "decline.mp3";
 let bgm_link = "./src/music/bgm/";
 let se_link = "./src/music/se/";
 let curr_bgm;
