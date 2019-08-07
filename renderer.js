@@ -135,6 +135,8 @@ function find_label(labelStr) {
     return index;
 }
 
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
 // -------- STORY PARSING/PATHING FUNCTIONS --------
 var rendering = false;
 // progresses story
@@ -193,6 +195,10 @@ function getNext() {
       }
       if (undefined !== curr_step.se) {
         // play sound effect (once)
+        if (undefined !== curr_step.wait) {
+            playSe(curr_step.se, curr_step.wait);
+            return;
+        } 
         playSe(curr_step.se);
         curr_line++;
         getNext();
@@ -237,6 +243,16 @@ function getNext() {
     }
   }
 
+  function waitSeconds(iMilliSeconds) {
+    var counter= 0
+        , start = new Date().getTime()
+        , end = 0;
+    while (counter < iMilliSeconds) {
+        end = new Date().getTime();
+        counter = end - start;
+    }
+}
+
   function renderChoices(possibleAns) {
     console.log(possibleAns);
     if(!rendering) {
@@ -252,7 +268,10 @@ function getNext() {
                 getNext(); // go on to choice results
                 fadeout("#choice", 500, function() {
                     $("#choice").empty(); // clear choices after selection
-                    setNextTrigger();
+                    fadeout("#choiceOverlay",200, function() {
+                        setNextTrigger();
+                    })
+                   
                 }) 
             });
             if(i == possibleAns.length-1) {
@@ -394,8 +413,9 @@ function stopBgm(callback) {
     });
 }
 
-// plays inputed audio file once 
-function playSe(se) {
+// plays inputed audio file once with optional wait
+function playSe(se, wait) {
+    let curr_step = story[curr_line]; // get the dialogue obj
     // if multiple sound effects are to be played at the same time...
     if(se.length > 1) {
         for (let i = 0; i < se.length; i++) {
@@ -404,7 +424,14 @@ function playSe(se) {
                 src: [se_link + se[i]],
                 autoplay: true,
                 volume: 0.7,
-                loop: false
+                loop: false,
+                onend: function() {
+                    if (undefined !== wait) {
+                        waitSeconds(curr_step.wait);
+                        curr_line++;
+                        getNext();
+                    }
+                }
             });
         }
     } else {
@@ -413,7 +440,14 @@ function playSe(se) {
             src: [se_link + se[0]],
             autoplay: true,
             volume: 0.7,
-            loop: false
+            loop: false,
+            onend: function() {
+                if (undefined !== wait) {
+                    waitSeconds(curr_step.wait);
+                    curr_line++;
+                    getNext();
+                }
+            }
         });
     }
     
