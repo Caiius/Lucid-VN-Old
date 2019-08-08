@@ -118,7 +118,7 @@ var story = [
     {label: "smash", msg: "Luckily, the statue isn't very heavy.  You hold the statue high over your head,  then spiked it straight downwards towards your feet."},
     {se:["smash.mp3"], wait: 1500}, 
     {msg: "(There's the key.)"},
-    {se: ["bell.mp3"]},
+    {se: ["bell.mp3"], wait: 1500},
     {msg:"(Now,  for the suitcase.)"},
     {msg: "You fumble around with the key in the dark,  but it doesn't take too long to unlock the case."},
     {se: ["luggage.mp3"]},
