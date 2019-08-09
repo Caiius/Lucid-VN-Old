@@ -3,7 +3,7 @@ const j = "Joel"; // Joel Emerson, off duty investigator for the local police
 const s = "Sidney"; // jounalist for an urban exploration blog
 const r = "Remus"; // Remus Hawthorn, artist and owner of mansion
 
-const DEFAULT_SPEED = 20;
+const DEFAULT_SPEED = 10;
 
 var story = [
 // CHAPTER 1: 
@@ -112,19 +112,19 @@ var story = [
     // {label:"introRight", msg: "Your eyes had adjusted to the dark,  so you could just make out the outline "+
     // "of something in the right back corner of the compartment."},
     {msg: "(Now that I think about it,  I don't think this thing was here during my vision.)"},
-    {msg: "(It feels like some sort of mini ceramic statue.  Weird.)"},
-    {se: ["glassShake.mp3"], wait: 1000},
-    {msg: "(Ah,  I see.)", next: "smash"},
+    {msg: "(It feels like some sort of mini ceramic statue.  How strange.)"},
+    {se: ["glassShake.mp3"], wait: 1500},
+    {msg: "(Ah,  There's something inside.)", next: "smash"},
     {label:"introCenter", msg: "(.................)"},
     {msg: "(No,  I don't think anything is here.)", next: "introKeyChoice"},
     {label:"introLeft", msg: "(...Nope.  I must be missing something from before.)", next: "introKeyChoice"},
     {label: "smash", msg: "Luckily, the statue isn't very heavy.  You hold the statue high over your head,  then spiked it straight downwards towards your feet."},
     {se:["smash.mp3"], wait: 1500}, 
-    {msg: "(There's the key.)"},
+    {msg: "(Alright,  there's the key.)"},
     {se: ["bell.mp3"], wait: 1500},
     {msg:"(Now,  for the suitcase.)"},
     {msg: "You fumble around with the key in the dark,  but it doesn't take too long to unlock the case."},
-    {se: ["luggage.mp3"]},
+    {se: ["luggage.mp3"], wait: 1000},
     {msg: "You quickly swing open the lid.  Inside,  you find a flashlight,  several articles of clothing,  a "+
     "strange bronze medallion, and lastly,  a crumpled yellowed envelope."},
     {msg: "Turning on the flashlight,  you pick up the envelope,  carefully removing the wrinkled letter inside.  Something nonsensical was hastily scribbled on the paper in smudged pencil."},
