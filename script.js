@@ -63,11 +63,14 @@ var story = [
     // {msg: "Sure enough,  you soon could feel what could only be a handle and several tightly closed metal clasps. "},
     // {se: ["lock.mp3"], wait: 1000},
     // {se: ["lock.mp3"], wait: 1000},
-    // {msg: "(Damn,  it's locked!)"},
-    // // {se: [headPounding]}, // distort screen again?
-    // {msg: "(Ugh...  The ringing...  it's getting worse...)"},
-    // {msg: "You fall to your knees,  the intense pain cutting through your temples unforgivingly like an ice pick."},
-    // {msg: "(...My head...  it's splitting!)"},
+    {msg: "(Damn,  it's locked!)"},
+    {se: ["heartbeat.mp3", "ear_ringing.wav"]}, // distort screen again?
+    {bgm: "static.mp3"},
+    {msg: "(Ugh...  The ringing...  it's getting worse...)"},
+    {msg: "You fall to your knees,  the intense pain cutting through your temples unforgivingly like an ice pick."},
+    {se: ["heartbeat_accel.mp3", "ear_ringing_intense.mp3"]},
+    {msg: "(...My head...  it's splitting!)"},
+    {bgm: "stop"},
     // // {se: "[]"}, // Maybe some sort of sharp sound?
     // // {bgImg: "white.jpg"}, // distortion continues
     // {msg: "(W-what... what the hell is happening?)"},

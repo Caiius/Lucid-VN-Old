@@ -76,6 +76,7 @@ function typeWriter(str, spd) {
 // -------- START MENU FUNCTIONS --------
 
 function setNextTrigger(){
+    console.log("Setting next trigger");
     document.body.onkeyup = function(e){
         if(!isTyping) {
              // wait for space to progress story
@@ -195,6 +196,7 @@ function getNext() {
       }
       if (undefined !== curr_step.se) {
         // play sound effect (once)
+        disableNextTrigger();
         if (undefined !== curr_step.wait) {
             playSe(curr_step.se, curr_step.wait);
             return;
@@ -360,6 +362,11 @@ function fadein(element, speed, callback) {
 function playBgm(bgm) {
     // fade out last bgm (if applicable)
     curr_bgm_src = bgm;
+    if(bgm == "stop") {
+        console.log("Stopping BGM");
+        stopBgm();
+        return;
+    }
     if(curr_bgm != undefined) {
         stopBgm(function() {
             console.log("Switching bgms");
@@ -372,7 +379,7 @@ function playBgm(bgm) {
                 volume: 0.5,
                 onload: function() {
                     // fade in new bgm
-                    this.fade(0,1.0,3000);
+                    this.fade(0,0.5,3000);
                     curr_bgm = this;
                 }
             });
@@ -380,6 +387,7 @@ function playBgm(bgm) {
         });
         return;
     } 
+
     console.log("playing bgm " + bgm_link + bgm);
     // just create new Howl and play
     curr_bgm = new howler.Howl({
@@ -419,7 +427,7 @@ function playSe(se, wait) {
     // if multiple sound effects are to be played at the same time...
     if(se.length > 1) {
         for (let i = 0; i < se.length; i++) {
-            console.log("Playing se: " + se_link + se);
+            console.log("Playing se: " + se_link + se[i]);
             let s = new howler.Howl({
                 src: [se_link + se[i]],
                 autoplay: true,
@@ -433,6 +441,7 @@ function playSe(se, wait) {
                     }
                 }
             });
+            setNextTrigger();
         }
     } else {
         console.log("Playing se: " + se_link + se);
@@ -449,6 +458,7 @@ function playSe(se, wait) {
                 }
             }
         });
+        setNextTrigger();
     }
     
 }
