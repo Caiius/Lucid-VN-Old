@@ -19,7 +19,7 @@ var story = [
     // {msg:"Struggling,  you attempt to wiggle free from your bounds."},
     // {se: ["ropeCreak.mp3"]},
     // { msg: "What's this?  Your left hand seems to be coming loose!"},
-    // { label: "chair_struggle", event: "space", label: "Struggle", result: [
+    // { label: "chair_struggle", event: "tied_to_chair", label: "Struggle", result: [
     //     {success: "intro_success"},
     //     {fail: "intro_fail"}
     // ]},
@@ -89,7 +89,7 @@ var story = [
     // "something else within the case,  but you couldn't quite make out what it was.  Her wrists were slightly "+
     // "red as well,  and you could just make out the rope markings.  So she's in the same position as you right now."},
     // {msg: "Something shiny glints on the floor by the woman's foot."}, 
-    // // {se: ["realization"]},
+    // // {se: ["realization.mp3"]},
     // {msg: "(A key!)"},
     // {msg: "So there must be a key somewhere in this compartment!  Now it's just a matter of figuring out " +
     // "where she got it from."},
@@ -118,28 +118,52 @@ var story = [
     {label:"introCenter", msg: "(.................)"},
     {msg: "(No,  I don't think anything is here.)", next: "introKeyChoice"},
     {label:"introLeft", msg: "(...Nope.  I must be missing something from before.)", next: "introKeyChoice"},
-    {label: "smash", msg: "Luckily, the statue isn't very heavy.  You hold the statue high over your head,  then spiked it straight downwards towards your feet."},
+    {label: "smash", msg: "Luckily, the statue wasn't very heavy."},
+    {label: "(Sorry,  Mr. Gnome.)"},
     {se:["smash.mp3"], wait: 1500}, 
     {msg: "(Alright,  there's the key.)"},
     {se: ["bell.mp3"], wait: 1500},
     {msg:"(Now,  for the suitcase.)"},
     {msg: "You fumble around with the key in the dark,  but it doesn't take too long to unlock the case."},
     {se: ["luggage.mp3"], wait: 1000},
-    {msg: "You quickly swing open the lid.  Inside,  you find a flashlight,  several articles of clothing,  a "+
-    "strange bronze medallion, and lastly,  a crumpled yellowed envelope."},
+    {msg: "You quickly swing open the lid.  Inside,  you find a flashlight,  several articles of clothing, and lastly,  a crumpled yellowed envelope."},
     {msg: "Turning on the flashlight,  you pick up the envelope,  carefully removing the wrinkled letter inside.  Something nonsensical was hastily scribbled on the paper in smudged pencil."},
     //{img:},
     // start creepy but subtle creaking se; starts faint but gets louder until player turns around
     {msg: "('Across the parallels,  find the intersection.'  ...what does this even mean?)"},
     {msg: "The pounding in your head gets slightly stronger,  then ebbs away."},
-    {msg: "Next,  you pick  up the medallion.  It's heavier and denser than it looks,  and is quite banged and scratched up."},
-    {msg:""},
     {msg: "(I guess I'll just hold on to these for now.)"},
     {se: ["bell.mp3"]},
-    {msg: "[Obtained flashlight, medallion, and envelope]"},
+    {msg: "[Obtained a flashlight and the letter]"},
     {msg: "[Press the 'i' key or the inventory button in order to access your inventory.]"},
-    {se: [""]}, // sounds
-    {msg: "(...)"}
+    {se: [""], wait: 1000}, // creaking clanking sounds
+    {se: [], wait: 500}, // stray bang/clank, something metal being dropped 
+    {msg: "Ah!  Are you alright?", name:"???"},
+    {msg: "Yeah, yeah I'm fine,  just clipped myself.  This thing is really rusted over.", name:"???"},
+    {se: ["realization.mp3"], wait:1000},
+    {msg: "Muffled voices sound out, cutting through the repetitive rumbling of the train.  " +
+    "You immediately feel a flood of relief rush into your chest."},
+    {msg: "(It's coming from... the ceiling?)"},
+    {msg: "(There's a hatch!)"},
+    {msg: "you would've never noticed it in the dark.  The thought of being stuck here any longer "+
+    "makes you shudder."},
+    {msg: "Digging your feet into the sides of the compartment,  you manage to hoist yourself up towards the hatch.  "},
+    {se: [], wait: 1000}, // bang
+    {msg: "(Please,  open up!)"},
+    {msg: "Sure enough,  the people on the other side immediately noticed your banging. "},
+    {msg: "Aw shit,  there's another person!", name: "???"},
+    {msg: "Stand back.", name:"???"},
+    {se:[""]}, // heavier hits
+    {msg:"You feel your whole body shake with each hit, small flakes of rust falling like snow.  " +
+    "You hastily drop back down towards the ground."},
+    {se: [], wait: 500}, // final hit
+    {se: ["openHatch"], wait: 2000}, 
+    {bgImg: ""},
+    {msg: "Squinting against the suddent burst of light,  you look upwards towards your saviors.  " +
+    "A scruffy looking man peers down back at you,  a bemused expression on his face.  Behind him stood a " +
+    "nervous looking girl."},
+    {bgm: "difficult_desicions.mp3"},
+    {msg: "Need some help?", name: "???"}
 
     // You feel something resembling hope starting to bubble in your chest. 
 

@@ -25,6 +25,7 @@ window.onload = function() {
     $(".startMenuBtn").mouseenter(function() {
         playSe(["button.mp3"]);
     });
+    document.getElementById("nextCursor").style.display = "none";
 
     /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
     particlesJS.load('particles-js', './particlejs-config.json', function() {
@@ -57,17 +58,22 @@ window.onload = function() {
 // performs a typewriter effect given an string
 function typeWriter(str, spd) {
     if(!isTyping) {
-        document.getElementById("msgBox").innerHTML = "";
+        document.getElementById("textArea").innerHTML = "";
         // add pause wherever there is two spaces
         str = str.replace(/ +(?= )/g, ' ^500');
         //console.log(str);
         isTyping = true;
-        var typed = new Typed("#msgBox", {
+        if (document.getElementById("nextCursor").style.display === "block") {
+            document.getElementById("nextCursor").style.display = "none";
+        }
+        
+        var typed = new Typed("#textArea", {
             strings: [str],
             typeSpeed: spd,
             showCursor: false,
             onComplete: function(self) {
                 isTyping = false;
+                document.getElementById("nextCursor").style.display = "block";
             },
         });
     }

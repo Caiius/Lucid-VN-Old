@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Lucid</title>
     <link rel="stylesheet" type="text/css" href="src/css/system.css">
+    <link rel="stylesheet" type="text/css" href="src/css/event.css">
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet">
   </head>
   <body>
@@ -75,7 +76,10 @@
     <!-- FOOTER -->
     <div id="footer">
       <div id="nameBox"></div>
-      <div id="msgBox"></div>
+      <div id="msgBox">
+        <div id="textArea"></div>
+        <img id="nextCursor" src="./src/nextCursor.gif" alt="nextCursor">
+      </div>
       <!-- <div id="inputBox">> </div>
       <input type="text" id="userInput" maxlength="50"> -->
       <button class="menuBtn" onclick="on()">Menu</button>
@@ -89,6 +93,7 @@
     <script src="./script.js"></script>  
     <script src="./particles.min.js"></script> 
     <script src="./renderer.js"></script>
+    <script src="./eventScripts/tied_to_chair.js"></script>
     <script>if (window.module) module = window.module;</script>
   </body>
 </html>

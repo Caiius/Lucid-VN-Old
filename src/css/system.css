@@ -210,6 +210,16 @@ body {
     border-width: 4px;
 }
 
+#nextCursor {
+    vertical-align:middle;
+    text-align: center;
+    display: none;
+    position: relative;
+    bottom: 0; /* adjust to suit requirements */
+    margin: 0 auto;
+    z-index: 3;
+}
+
 #nameBox {
     background-color: #1d1d1d;
     height:10px;
