@@ -1,5 +1,8 @@
-# Lucid - A JS Horror Visual Novel
-by Xuyumi
+# Lucid - A JS Visual Novel Engine
+by Isebyte
+
+## NOTE
+This project was built from scratch using vanilla JS and development has been put on hold. 
 
 *"What do you mean the train is haunted???"*
 
